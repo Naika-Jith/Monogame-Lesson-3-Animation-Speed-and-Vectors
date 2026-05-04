@@ -1,4 +1,5 @@
-﻿using System.Net.Mime;
+﻿using System;
+using System.Net.Mime;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -35,11 +36,18 @@ namespace Monogame_Lesson_3___Animation_Speed_and_Vectors
         Vector2 tribbleBrownSpeed;
         Vector2 tribbleOrangeSpeed;
 
+        Color greyTribbleColor;
+        Color orangeTribbleColor;
+        Color creamTribbleColor;
+        Color brownTribbleColor;
+
         SoundEffect tribbleCoo;
 
         MouseState mouseState;
 
         Screen screen;
+
+        Random rng = new Random();
 
         public Game1()
         {
@@ -53,7 +61,10 @@ namespace Monogame_Lesson_3___Animation_Speed_and_Vectors
             // TODO: Add your initialization logic here
 
 
-
+            greyTribbleColor = Color.White;
+            orangeTribbleColor = Color.White;
+            creamTribbleColor = Color.White;
+            brownTribbleColor = Color.White;
 
             window = new Rectangle(0, 0, 800, 600);
             _graphics.PreferredBackBufferWidth = window.Width;
@@ -74,6 +85,9 @@ namespace Monogame_Lesson_3___Animation_Speed_and_Vectors
 
             orangeTribbleRect = new Rectangle(400, 20, 100, 100);
             tribbleOrangeSpeed = new Vector2(4, -3);
+
+            creamTribbleRect = new Rectangle(rng.Next(0, window.Width - 100), rng.Next(0, window.Height - 100),100, 100);
+            brownTribbleRect = new Rectangle(rng.Next(0, window.Width - 100), rng.Next(0, window.Height - 100), 100, 100);
 
             screen = Screen.Intro;
 
@@ -119,7 +133,10 @@ namespace Monogame_Lesson_3___Animation_Speed_and_Vectors
 
                 if (greyTribbleRect.Right > window.Width || greyTribbleRect.Left < 0)
                 {
-                    tribbleGreySpeed.X *= -1;
+                    greyTribbleRect.X = rng.Next(0, window.Width - greyTribbleRect.Width);
+                    tribbleGreySpeed.X = rng.Next(-5, 6);
+                    if (tribbleGreySpeed.X == 0) tribbleGreySpeed.X = 1;
+                    greyTribbleColor = Color.Aquamarine;
                     tribbleCoo.Play();
 
                 }
@@ -127,7 +144,10 @@ namespace Monogame_Lesson_3___Animation_Speed_and_Vectors
 
                 if (greyTribbleRect.Bottom > window.Height || greyTribbleRect.Top < 0)
                 {
-                    tribbleGreySpeed.Y *= -1;
+                    greyTribbleRect.Y = rng.Next(0, window.Height - greyTribbleRect.Height);
+                    tribbleGreySpeed.Y = rng.Next(-5, 6);
+                    if (tribbleGreySpeed.X == 0) tribbleGreySpeed.Y = 1;
+                    greyTribbleColor = Color.DarkMagenta;
                     tribbleCoo.Play();
                 }
 
@@ -138,6 +158,7 @@ namespace Monogame_Lesson_3___Animation_Speed_and_Vectors
                 if (creamTribbleRect.Right > window.Width || creamTribbleRect.Left < 0)
                 {
                     tribbleCreamSpeed.X *= -1;
+                    creamTribbleColor = Color.Aqua;
                     tribbleCoo.Play();
 
                 }
@@ -146,6 +167,7 @@ namespace Monogame_Lesson_3___Animation_Speed_and_Vectors
                 if (creamTribbleRect.Bottom > window.Height || creamTribbleRect.Top < 0)
                 {
                     tribbleCreamSpeed.Y *= -1;
+                    creamTribbleColor = Color.Aqua;
                     tribbleCoo.Play();
                 }
 
@@ -155,6 +177,7 @@ namespace Monogame_Lesson_3___Animation_Speed_and_Vectors
                 if (brownTribbleRect.Right > window.Width || brownTribbleRect.Left < 0)
                 {
                     tribbleBrownSpeed.X *= -1;
+                    brownTribbleColor = Color.Crimson;
                     tribbleCoo.Play();
 
                 }
@@ -163,6 +186,7 @@ namespace Monogame_Lesson_3___Animation_Speed_and_Vectors
                 if (brownTribbleRect.Bottom > window.Height || brownTribbleRect.Top < 0)
                 {
                     tribbleBrownSpeed.Y *= -1;
+                    brownTribbleColor = Color.Crimson;
                     tribbleCoo.Play();
                 }
 
@@ -172,6 +196,7 @@ namespace Monogame_Lesson_3___Animation_Speed_and_Vectors
                 if (orangeTribbleRect.Right > window.Width || orangeTribbleRect.Left < 0)
                 {
                     tribbleOrangeSpeed.X *= -1;
+                    orangeTribbleColor = Color.MediumSeaGreen;
                     tribbleCoo.Play();
 
                 }
@@ -180,6 +205,7 @@ namespace Monogame_Lesson_3___Animation_Speed_and_Vectors
                 if (orangeTribbleRect.Bottom > window.Height || orangeTribbleRect.Top < 0)
                 {
                     tribbleOrangeSpeed.Y *= -1;
+                    orangeTribbleColor = Color.MediumOrchid;
                     tribbleCoo.Play();
                 }
 
@@ -207,10 +233,11 @@ namespace Monogame_Lesson_3___Animation_Speed_and_Vectors
            
             else if (screen == Screen.TribbleYard)
             {
-                _spriteBatch.Draw(tribbleGreyTexture, greyTribbleRect, Color.White);
-                _spriteBatch.Draw(tribbleCreamTexture, creamTribbleRect, Color.White);
-                _spriteBatch.Draw(tribbleBrownTexture, brownTribbleRect, Color.White);
-                _spriteBatch.Draw(tribbleOrangeTexture, orangeTribbleRect, Color.White);
+                
+                _spriteBatch.Draw(tribbleGreyTexture, greyTribbleRect, greyTribbleColor) ;
+                _spriteBatch.Draw(tribbleCreamTexture, creamTribbleRect, creamTribbleColor);
+                _spriteBatch.Draw(tribbleBrownTexture, brownTribbleRect, brownTribbleColor);
+                _spriteBatch.Draw(tribbleOrangeTexture, orangeTribbleRect, orangeTribbleColor);
             }
 
             _spriteBatch.End();

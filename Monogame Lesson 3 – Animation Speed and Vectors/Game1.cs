@@ -49,6 +49,8 @@ namespace Monogame_Lesson_3___Animation_Speed_and_Vectors
 
         Random rng = new Random();
 
+        SpriteFont Arial;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -109,6 +111,10 @@ namespace Monogame_Lesson_3___Animation_Speed_and_Vectors
 
 
             tribbleCoo = Content.Load<SoundEffect>("tribble_coo");
+
+            Arial = Content.Load<SpriteFont>("Arial");
+
+          
         }
 
         protected override void Update(GameTime gameTime)
@@ -229,6 +235,8 @@ namespace Monogame_Lesson_3___Animation_Speed_and_Vectors
             if (screen == Screen.Intro)
             {
                 _spriteBatch.Draw(tribbleIntroTexture, window, Color.White);
+                _spriteBatch.DrawString(Arial, "Click Anywhere To Enter!", new Vector2(30, 200), (Color.White));
+                
             }
            
             else if (screen == Screen.TribbleYard)
